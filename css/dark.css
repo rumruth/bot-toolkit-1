@@ -1,0 +1,48 @@
+body{
+	background-color:#2D2D2D;
+}
+.form-control{
+	background-color:#333333;
+	border-color:#000000;
+	color:#AAAAAA;
+}
+.panel-default{
+	background-color:#333333;
+	border-color:#000000;
+	color:#AAAAAA;
+}
+.panel-default>.panel-heading, 
+.well, .btn-default, 
+.list-group-item, 
+.form-control[readonly], 
+fieldset[disabled], 
+.input-group-addon,
+.modal-body,
+.modal-content,
+.form-control[disabled]{
+	background-color:#222;
+	border-color:#000000;
+	color:#AAAAAA;
+}
+.btn-default:hover{
+	background-color:#111;
+	color:#C1C1C1;
+	border-color:#000000;
+}
+.list-group-item:hover{
+	background-color:#111 !important;
+	color:#C1C1C1 !important;
+	border-color:#000000 !important;
+}
+#full-pic{
+	background-color:#222;
+}
+#full-pic>img, .modal-header, .modal-footer, hr{
+	border-color:#000000;
+}
+/*
+.btn-info{
+	background-color:#1F7C98;
+	border-color:#176075;
+}
+*/

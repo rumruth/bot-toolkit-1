@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BotToolkit v</title>
+    <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+    <script type="text/javascript">
+      window.$ = window.jQuery = require('./lib/jquery-3.3.1.min.js');
+    </script>
+    <script type="text/javascript">
+      var dict;
+      var crashed = false;
+      require('./js/preload.js'); 
+    </script>
+
+  </head>
+  <body>
+    <div id="loading-screen2">
+      <div class="loading-image-container">
+        <img src="./res/husky.gif" width="100px" height="100px">
+        <div class="tip-box"><!--Loading screen tip ahoy--></div>
+      </div>
+    </div>
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid nav-container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">BotToolkit <span class="version"></span></a>
+        </div>
+        <div class="btn-group app-menu">
+          <a href="#" class="colorless-btn dropdown-toggle navbar-btn" data-toggle="dropdown" aria-expanded="false">
+            <script type="text/javascript">document.write(dict.file);</script>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dark-dropdown" data-cfg="1">
+            <li><a id="load-config" href="#"><script type="text/javascript">document.write(dict.load_config);</script></a></li>
+            <li><a id="save-config" href="#"><script type="text/javascript">document.write(dict.save_config);</script></a></li>
+            <li><a id="import-config" href="#"><script type="text/javascript">document.write(dict.import_config);</script></a></li>
+            <li><a id="export-config" href="#"><script type="text/javascript">document.write(dict.export_config);</script></a></li>
+            <li><a id="remove-config" href="#"><script type="text/javascript">document.write(dict.remove_config);</script></a></li>
+            <!-- <li><a id="remove-config" href="#">Unload config</a></li> -->
+          </ul>
+        </div>
+        <div class="btn-group app-menu">
+          <a href="#" class="colorless-btn dropdown-toggle navbar-btn" data-toggle="dropdown" aria-expanded="false">
+            <script type="text/javascript">document.write(dict.help);</script>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dark-dropdown">
+            <li><a href="#" data-toggle="modal" data-target="#aboutModal"><script type="text/javascript">document.write(dict.about);</script></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#changelogModal"><script type="text/javascript">document.write(dict.changelog);</script></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#keybindModal"><script type="text/javascript">document.write(dict.keybinds);</script></a></li>
+            <!--<li><a href="https://source.dog/toolkit/docs">Documentation</a></li>-->
+          </ul>
+        </div>
+        <div class="btn-group app-menu" id="debug-toggle" style="display:none;">
+          <a href="#" class="colorless-btn dropdown-toggle navbar-btn" data-toggle="dropdown" aria-expanded="false">
+            <script type="text/javascript">document.write(dict.debug);</script>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu dark-dropdown">
+
+            <li class="dropdown-submenu">
+              <a class="submenu-a" tabindex="-1" href="#"><script type="text/javascript">document.write(dict.app);</script> <span class="caret"></span></a>
+              <ul class="dropdown-menu dark-dropdown">
+                <li><a tabindex="-1" href="#" id="debug-devtools"><script type="text/javascript">document.write(dict.developer_tools);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-reload-window"><script type="text/javascript">document.write(dict.reload_window);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-safe-reload"><script type="text/javascript">document.write(dict.reload_safely);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-close-window"><script type="text/javascript">document.write(dict.close_window);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-reset-id"><script type="text/javascript">document.write(dict.reset_id_file);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-reset-settings"><script type="text/javascript">document.write(dict.reset_settings);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-full-reset"><script type="text/javascript">document.write(dict.full_reset);</script></a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a class="submenu-a" tabindex="-1" href="#"><script type="text/javascript">document.write(dict.panels);</script> <span class="caret"></span></a>
+              <ul class="dropdown-menu dark-dropdown">
+                <li><a tabindex="-1" href="#" id="debug-enable-panels"><script type="text/javascript">document.write(dict.enable);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-disable-panels"><script type="text/javascript">document.write(dict.disable);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-hide-panels"><script type="text/javascript">document.write(dict.hide);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-show-panels"><script type="text/javascript">document.write(dict.show);</script></a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a class="submenu-a" tabindex="-1" href="#"><script type="text/javascript">document.write(dict.presets);</script> <span class="caret"></span></a>
+              <ul class="dropdown-menu dark-dropdown">
+                <li><a tabindex="-1" href="#" id="debug-enable-presets"><script type="text/javascript">document.write(dict.enable);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-disable-presets"><script type="text/javascript">document.write(dict.disable);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-hide-presets"><script type="text/javascript">document.write(dict.hide);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-show-presets"><script type="text/javascript">document.write(dict.show);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-clear-presets"><script type="text/javascript">document.write(dict.clear);</script></a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+              <a class="submenu-a" tabindex="-1" href="#"><script type="text/javascript">document.write(dict.token);</script> <span class="caret"></span></a>
+              <ul class="dropdown-menu dark-dropdown">
+                <li><a tabindex="-1" href="#" id="debug-lock-token"><script type="text/javascript">document.write(dict.lock);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-unlock-token"><script type="text/javascript">document.write(dict.unlock);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-hide-token"><script type="text/javascript">document.write(dict.hide);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-show-token"><script type="text/javascript">document.write(dict.show);</script></a></li>
+                <li><a tabindex="-1" href="#" id="debug-clear-token"><script type="text/javascript">document.write(dict.clear);</script></a></li>
+              </ul>
+            </li>
+
+          </ul>
+        </div>
+        <!--
+        <div class="navbar-header header-bleak pull-right" data-wc="1">
+          <a class="navbar-brand" style="transform:translate(0px, -5px);" href="#"><i class="fas fa-window-minimize"></i></a>
+          <a class="navbar-brand" href="#"><i class="fas fa-window-maximize"></i></a>
+          <a class="navbar-brand" href="#"><i class="fas fa-window-close"></i></a>
+        </div>
+        -->
+      </div>
+    </nav>
+
+    <nav class="navbar navbar-inverse navbar2">
+      <div class="container-fluid nav-container">
+        <div class="navbar-header header-bleak pull-right" data-wc="1">
+          <a class="navbar-brand" style="transform:translate(0px, -5px);" href="#"><i class="fas fa-window-minimize"></i></a>
+          <a class="navbar-brand" href="#"><i class="fas fa-window-maximize"></i></a>
+          <a class="navbar-brand" href="#"><i class="fas fa-window-close"></i></a>
+        </div>
+      </div>
+    </nav>
+
+
+
+    <div class="container-fluid app-body">
+      <div class="row split-equal">
+        <div class="col-sm-4">
+          <div class="progress progress-striped active" style=" height:34px;">
+            <div class="well well-sm success-status" title="Status" style="width:100%;" id="status" data-tp-translation="status"><script type="text/javascript">document.write(dict.status);</script></div>
+            <script type="text/javascript">$("[data-tp-translation='status']").attr("title", dict.status);</script>
+          </div>
+          <div class="panel panel-default" data-cp="1">
+            <div class="panel-heading">
+              <h3 class="panel-title"><i class="fas fa-id-card left-icon"></i><script type="text/javascript">document.write(dict.bot_info);</script></h3>
+            </div>
+            <div class="panel-body" id="info">
+              <div class="input-group btn-block">
+                <span class="input-group-addon pointer" id="bot-pic"></span>
+                <div id="full-pic"><img src=""></div>
+                <input id="bot-name" type="text" class="form-control" readonly>
+              </div>
+              <br>
+              <select class="form-control" id="bot-status">
+                <option value="online"><script type="text/javascript">document.write(dict.online);</script></option>
+                <option value="idle"><script type="text/javascript">document.write(dict.idle);</script></option>
+                <option value="dnd"><script type="text/javascript">document.write(dict.dnd);</script></option>
+                <option value="invisible"><script type="text/javascript">document.write(dict.invisible);</script></option>
+              </select>
+              <br>
+              <input type="text" class="form-control" placeholder="Game playing" id="bot-game" data-translation="bot-game">
+              <script type="text/javascript">$("[data-translation='bot-game']").attr("placeholder", dict.game_playing);</script>
+              <br>
+              <button type="button" class="btn btn-info btn-block" id="set-presence"><script type="text/javascript">document.write(dict.save_changes);</script></button>
+            </div>
+          </div>
+          <div class="list-group">
+            <a href="#" data-target="home" class="side-menu list-group-item active"><i class="fas fa-home left-icon"></i><script type="text/javascript">document.write(dict.home);</script></a>
+            <a href="#" data-target="messaging" class="side-menu list-group-item"><i class="fas fa-comment left-icon"></i><script type="text/javascript">document.write(dict.messaging);</script></a>
+            <a href="#" data-target="voice" class="side-menu list-group-item"><i class="fas fa-microphone left-icon"></i><script type="text/javascript">document.write(dict.voice);</script></a>
+            <a href="#" data-target="experimental" class="side-menu list-group-item"><i class="fas fa-flask left-icon"></i><script type="text/javascript">document.write(dict.experimental);</script></a>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <div class="input-group" data-token="1">
+            <input type="text" class="form-control" placeholder="Bot token" data-translation="bot-token">
+            <a href="#" class="input-group-addon btn btn-primary primary-override" style="min-width:70px;"><script type="text/javascript">document.write(dict.login);</script></a>
+          </div>
+          <script type="text/javascript">$("[data-translation='bot-token']").attr("placeholder", dict.bot_token);</script>
+          <br>
+          <div class="main-container" id="home">
+            <div class="alert alert-success fade in" id="version-control" style="display:none;">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong><script type="text/javascript">document.write(dict.new_version_available);</script></strong> <script type="text/javascript">document.write(dict.new_version_data);</script>
+            </div>
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-chart-line left-icon"></i><script type="text/javascript">document.write(dict.overview);</script></h3>
+              </div>
+              <div class="panel-body">
+                <div class="well well-sm"><script type="text/javascript">document.write(dict.profile_data);</script></div>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <div class="input-group btn-block">
+                      <input type="text" class="form-control pointer" id="pic-name" placeholder="Choose an image..." readonly data-translation="select-image">
+                      <span class="input-group-addon pointer" id="remove-pic">
+                        <i class="fas fa-times"></i>
+                      </span>
+                    </div>
+                    <script type="text/javascript">$("[data-translation='select-image']").attr("placeholder", dict.choose_image);</script>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Username" id="bot-username" data-translation="username">
+                    <script type="text/javascript">$("[data-translation='username']").attr("placeholder", dict.username);</script>
+                  </div>
+                </div>
+                <br>
+                <button type="button" class="btn btn-info btn-block" id="save-profile"><script type="text/javascript">document.write(dict.save_changes);</script></button>
+                <br>
+                <div class="well well-sm"><script type="text/javascript">document.write(dict.quick_stats);</script></div>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <div class="input-group btn-block">
+                      <span class="input-group-addon pointer" data-toggle="tooltip" data-placement="top" title="Total servers" data-tp-translation="total-servers">
+                        <script type="text/javascript">$("[data-tp-translation='total-servers']").attr("title", dict.total_servers);</script>
+                        <i class="fas fa-server"></i>
+                      </span>
+                      <input type="text" class="form-control" id="bot-servers" readonly>
+                    </div>
+                    <br>
+                    <div class="input-group btn-block">
+                      <span class="input-group-addon pointer" data-toggle="tooltip" data-placement="top" title="Total users" data-tp-translation="total-users">
+                        <script type="text/javascript">$("[data-tp-translation='total-users']").attr("title", dict.total_users);</script>
+                        <i class="fas fa-user"></i>
+                      </span>
+                      <input type="text" class="form-control" id="bot-users" readonly>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-group btn-block">
+                      <span class="input-group-addon pointer" data-toggle="tooltip" data-placement="top" title="Total channels" data-tp-translation="total-channels">
+                        <script type="text/javascript">$("[data-tp-translation='total-channels']").attr("title", dict.total_channels);</script>
+                        <i class="fas fa-comments"></i>
+                      </span>
+                      <input type="text" class="form-control" id="bot-channels" readonly>
+                    </div>
+                    <br>
+                    <div class="input-group btn-block">
+                      <span class="input-group-addon pointer" data-toggle="tooltip" data-placement="top" title="Ping (ms)" data-tp-translation="avg-ping">
+                        <script type="text/javascript">$("[data-tp-translation='avg-ping']").attr("title", dict.avg_ping);</script>
+                        <i class="fas fa-signal"></i>
+                      </span>
+                      <input type="text" class="form-control" id="bot-ping" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-flag left-icon"></i><script type="text/javascript">document.write(dict.guild_options);</script></h3>
+              </div>
+              <div class="panel-body" data-gd="1">
+                <select class="form-control">
+                  <option value=""><script type="text/javascript">document.write(dict.server);</script></option>
+                </select>
+                <br>
+                <div class="well well-sm"><script type="text/javascript">document.write(dict.bot_settings);</script></div>
+                <div class="row split-equal">
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Nickname" data-translation="nickname">
+                    <script type="text/javascript">$("[data-translation='nickname']").attr("placeholder", dict.nickname);</script>
+                  </div>
+                  <div class="col-sm-4">
+                    <button class="btn btn-info btn-block"><script type="text/javascript">document.write(dict.save);</script></button>
+                  </div>
+                </div>
+                <br>
+                <div class="well well-sm"><script type="text/javascript">document.write(dict.moderation);</script></div>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <select class="form-control">
+                      <option value="" selected disabled><script type="text/javascript">document.write(dict.member);</script></option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+                    <select class="form-control">
+                      <option value="0"><script type="text/javascript">document.write(dict.kick);</script></option>
+                      <option value="1"><script type="text/javascript">document.write(dict.ban);</script></option>
+                    </select>
+                  </div>
+                </div>
+                <br>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="User id" data-translation="user-id">
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control"  data-toggle="tooltip" data-placement="top" title="Number of days of messages to delete (bans only)" placeholder="Days" data-translation="days" data-tp-translation="days-description">
+                    <script type="text/javascript">
+                      $("[data-tp-translation='days-description']").attr("title", dict.days_description);
+                      $("[data-translation='days']").attr("placeholder", dict.days);
+                    </script>
+                  </div>
+                </div>
+                <br>
+                <textarea class="form-control" style="resize:vertical;" placeholder="Reason" data-translation="reason"></textarea>
+                <script type="text/javascript">$("[data-translation='reason']").attr("placeholder", dict.reason);</script>
+                <br>
+                <button type="button" class="btn btn-info btn-block"><script type="text/javascript">document.write(dict.go);</script></button>
+                <br>
+                <div class="well well-sm"><script type="text/javascript">document.write(dict.assign_roles);</script></div>
+                <select class="form-control">
+                  <option value="" selected disabled><script type="text/javascript">document.write(dict.role);</script></option>
+                </select>
+                <br>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <select class="form-control">
+                      <option value="" selected disabled><script type="text/javascript">document.write(dict.member);</script></option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="User id" data-translation="user-id">
+                    <script type="text/javascript">$("[data-translation='user-id']").attr("placeholder", dict.user_id);</script>
+                  </div>
+                </div>
+                <br>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <button type="button" class="btn btn-info btn-block"><script type="text/javascript">document.write(dict.add_role);</script></button>
+                  </div>
+                  <div class="col-sm-6">
+                    <button type="button" class="btn btn-info btn-block"><script type="text/javascript">document.write(dict.remove_role);</script></button>
+                  </div>
+                </div>
+                <br>
+                <div class="well well-sm"><script type="text/javascript">document.write(dict.invite_users);</script></div>
+                <div class="well well-sm"><script type="text/javascript">document.write(dict.no_invites_msg);</script><center></center></div>
+                <div class="row split-equal">
+                  <div class="col-sm-8">
+                    <select class="form-control">
+                      <option value=""><script type="text/javascript">document.write(dict.channel);</script></option>
+                    </select>
+                  </div>
+                  <div class="col-sm-4">
+                    <button class="btn btn-default btn-block"><script type="text/javascript">document.write(dict.create_invite);</script></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-cloud-upload-alt left-icon"></i><script type="text/javascript">document.write(dict.invite_to_server);</script></h3>
+              </div>
+              <div class="panel-body" data-inv="1">
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Bot id" data-translation="bot-id">
+                    <script type="text/javascript">$("[data-translation='bot-id']").attr("placeholder", dict.bot_id);</script>
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" placeholder="Permissions" data-translation="permissions">
+                    <script type="text/javascript">$("[data-translation='permissions']").attr("placeholder", dict.permissions);</script>
+                  </div>
+                </div>
+                <br>
+                <textarea placeholder="Bot invite URL" class="form-control" style="resize:vertical;" readonly data-translation="bot-invite"></textarea>
+                <script type="text/javascript">$("[data-translation='bot-invite']").attr("placeholder", dict.bot_invite);</script>
+                <br>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <button type="button" class="btn btn-default btn-block"><script type="text/javascript">document.write(dict.copy_invite_link);</script></button>
+                  </div>
+                  <div class="col-sm-6">
+                    <button type="button" class="btn btn-default btn-block"><script type="text/javascript">document.write(dict.open_invite_link);</script></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-calculator left-icon"></i><script type="text/javascript">document.write(dict.permissions_calculator);</script></h3>
+              </div>
+              <div class="panel-body" data-calculator="1">
+                <div class="well well-sm">
+                  <script type="text/javascript">document.write(dict.permissions_general);</script>
+                  <input type="checkbox" class="pull-right">
+                </div>
+                <div class="row split-equal">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+                <br>
+                <div class="well well-sm">
+                  <script type="text/javascript">document.write(dict.permissions_text);</script>
+                  <input type="checkbox" class="pull-right">
+                </div>
+                <div class="row split-equal">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+                <br>
+                <div class="well well-sm">
+                  <script type="text/javascript">document.write(dict.permissions_voice);</script>
+                  <input type="checkbox" class="pull-right">
+                </div>
+                <div class="row split-equal">
+                  <div class="col-sm-6"></div>
+                  <div class="col-sm-6"></div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-cog left-icon"></i><script type="text/javascript">document.write(dict.settings);</script></h3>
+              </div>
+              <div class="panel-body">
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <div class="input-group btn-block" data-toggle="tooltip" data-placement="top" title="Enables additional controls and functions that are useful for debugging/development" data-tp-translation="enables-debug">
+                      <span class="input-group-addon">
+                        <input type="checkbox" id="debug-mode">
+                      </span>
+                      <label for="debug-mode" type="text" class="form-control" readonly><script type="text/javascript">document.write(dict.enable_debug_mode);</script></label>
+                    </div>
+                    <div class="input-group btn-block" data-toggle="tooltip" data-placement="top" title="Shows a panel with longer log messages" data-tp-translation="shows-panel">
+                      <span class="input-group-addon">
+                        <input type="checkbox" id="show-verbose">
+                      </span>
+                      <label for="show-verbose" type="text" class="form-control" readonly><script type="text/javascript">document.write(dict.show_verbose_log);</script></label>
+                    </div>
+                    <div class="input-group btn-block" data-toggle="tooltip" data-placement="top" title="Makes everything dark" data-tp-translation="makes-dark">
+                      <span class="input-group-addon">
+                        <input type="checkbox" id="dark-mode">
+                      </span>
+                      <label for="dark-mode" type="text" class="form-control" readonly><script type="text/javascript">document.write(dict.dark_mode);</script></label>
+                    </div>
+                    <input type="text" readonly value="Language" class="form-control mt-20" data-translation="bot-language" data-toggle="tooltip" data-placement="top" title="Changes the application language" data-tp-translation="changes-language">
+                    <script type="text/javascript">
+                      $("[data-translation='bot-language']").attr("value", dict.language);
+                      $("[data-tp-translation='changes-language']").attr("title", dict.changes_language);
+                    </script>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-group btn-block" data-toggle="tooltip" data-placement="top" title="Masks the text in the token input field" data-tp-translation="masks-text">
+                      <span class="input-group-addon">
+                        <input type="checkbox" id="hide-token">
+                      </span>
+                      <label for="hide-token" type="text" class="form-control" readonly><script type="text/javascript">document.write(dict.hide_token);</script></label>
+                    </div>
+                    <div class="input-group btn-block" data-toggle="tooltip" data-placement="top" title="I am a tooltip" data-tp-translation="am-tooltip">
+                      <span class="input-group-addon">
+                        <input type="checkbox" id="disable-tooltips">
+                      </span>
+                      <label for="disable-tooltips" type="text" class="form-control" readonly><script type="text/javascript">document.write(dict.disable_tooltips);</script></label>
+                    </div>
+                    <div class="input-group btn-block" data-toggle="tooltip" data-placement="top" title="Checks whether an update is available to download" data-tp-translation="checks-update">
+                      <span class="input-group-addon">
+                        <input type="checkbox" id="check-updates" checked>
+                      </span>
+                      <label for="check-updates" type="text" class="form-control" readonly><script type="text/javascript">document.write(dict.check_for_updates);</script></label>
+                    </div>
+                    <select class="form-control mt-20" id="app-lang"></select>
+                  </div>
+                </div>
+                <script type="text/javascript">$("[data-tp-translation='enables-debug']").attr("title", dict.enables_debug);</script>
+                <script type="text/javascript">$("[data-tp-translation='shows-panel']").attr("title", dict.shows_panel);</script>
+                <script type="text/javascript">$("[data-tp-translation='makes-dark']").attr("title", dict.makes_dark);</script>
+                <script type="text/javascript">$("[data-tp-translation='masks-text']").attr("title", dict.masks_text);</script>
+                <script type="text/javascript">$("[data-tp-translation='am-tooltip']").attr("title", dict.am_tooltip);</script>
+                <script type="text/javascript">$("[data-tp-translation='checks-update']").attr("title", dict.checks_update);</script>
+                <br>
+                <div class="form-inline flex-container">
+                  <button type="button" class="btn btn-info flex-grow" id="save-settings"><script type="text/javascript">document.write(dict.save_changes);</script></button>
+                  <button id="settings-import" type="button" class="btn btn-success ml5" data-toggle="tooltip" data-placement="top" title="Import settings" data-tp-translation="import-settings"><i class="fas fa-download"></i></button>
+                  <script type="text/javascript">$("[data-tp-translation='import-settings']").attr("title", dict.import_settings);</script>
+                  <button id="settings-export" type="button" class="btn btn-primary ml5" data-toggle="tooltip" data-placement="top" title="Export settings" data-tp-translation="export-settings"><i class="fas fa-upload"></i></button>
+                  <script type="text/javascript">$("[data-tp-translation='export-settings']").attr("title", dict.export_settings);</script>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="main-container" id="messaging" style="display:none;">
+            <div class="panel panel-default" data-cp="1" data-msg="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-envelope left-icon"></i><script type="text/javascript">document.write(dict.send_message);</script></h3>
+              </div>
+              <div class="panel-body">
+                <select class="form-control">
+                  <option value="0"><script type="text/javascript">document.write(dict.channel_message);</script></option>
+                  <option value="1"><script type="text/javascript">document.write(dict.direct_message);</script></option>
+                </select>
+                <br>
+                <div>
+                  <select class="form-control">
+                    <option value="channel"><script type="text/javascript">document.write(dict.server);</script></option>
+                  </select>
+                  <br>
+                  <select class="form-control">
+                    <option value="direct"><script type="text/javascript">document.write(dict.channel);</script></option>
+                  </select>
+                </div>
+                <div style="display:none;">
+                  <select class="form-control">
+                    <option value=""><script type="text/javascript">document.write(dict.user);</script></option>
+                  </select>
+                  <br>
+                  <input type="text" class="form-control" placeholder="Search users by ID" data-translation="search-users-by-id">
+                  <script type="text/javascript">$("[data-translation='search-users-by-id']").attr("placeholder", dict.search_users_by_id);</script>
+                </div>
+                <br>
+                <textarea class="form-control" placeholder="Message text" rows="4" style="resize:vertical;" data-translation="message-text"></textarea>
+                  <script type="text/javascript">$("[data-translation='message-text']").attr("placeholder", dict.message_text);</script>
+                <br>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-default" data-wrap="**" data-toggle="tooltip" data-placement="top" title="Bold" data-tp-translation="bold"><i class="fas fa-bold"></i></button>
+                  <button type="button" class="btn btn-default" data-wrap="*" data-toggle="tooltip" data-placement="top" title="Italic" data-tp-translation="italic"><i class="fas fa-italic"></i></button>
+                  <button type="button" class="btn btn-default" data-wrap="__" data-toggle="tooltip" data-placement="top" title="Underlined" data-tp-translation="underlined"><i class="fas fa-underline"></i></button>
+                  <button type="button" class="btn btn-default" data-wrap="~~" data-toggle="tooltip" data-placement="top" title="Strike" data-tp-translation="strike"><i class="fas fa-strikethrough"></i></button>
+                  <button type="button" class="btn btn-default" data-wrap="`" data-toggle="tooltip" data-placement="top" title="Highlight" data-tp-translation="highlight"><i class="fas fa-h-square"></i></button>
+                  <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Code markup" data-tp-translation="code-markup"><i class="fas fa-code"></i></button>
+                  <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Mention user" data-tp-translation="mention-user"><i class="fas fa-at"></i></button>
+                </div>
+                <script type="text/javascript">$("[data-tp-translation='bold']").attr("title", dict.bold);</script>
+                <script type="text/javascript">$("[data-tp-translation='italic']").attr("title", dict.italic);</script>
+                <script type="text/javascript">$("[data-tp-translation='underlined']").attr("title", dict.underlined);</script>
+                <script type="text/javascript">$("[data-tp-translation='strike']").attr("title", dict.strike);</script>
+                <script type="text/javascript">$("[data-tp-translation='highlight']").attr("title", dict.highlight);</script>
+                <script type="text/javascript">$("[data-tp-translation='code-markup']").attr("title", dict.code_markup);</script>
+                <script type="text/javascript">$("[data-tp-translation='mention-user']").attr("title", dict.mention_user);</script>
+                <div class="pull-right">
+                  <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Toggle typing status" data-tp-translation="toggle-typing-status" disabled><i class="fas fa-keyboard"></i></button>
+                  <script type="text/javascript">$("[data-tp-translation='toggle-typing-status']").attr("title", dict.toggle_typing_status);</script>
+                  <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Save preset" data-tp-translation="save-preset"><i class="fas fa-save"></i></button>
+                  <script type="text/javascript">$("[data-tp-translation='save-preset']").attr("title", dict.save_preset);</script>
+                  <button class="btn btn-info"><script type="text/javascript">document.write(dict.send);</script></button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-envelope-open left-icon"></i><script type="text/javascript">document.write(dict.message_presets);</script></h3>
+              </div>
+              <div class="panel-body">
+                <div  data-pres="1"></div>
+                <div class="row split-equal">
+                  <div class="col-sm-8">
+                    <select class="form-control" id="dummy-preset">
+                      <option value="0"><script type="text/javascript">document.write(dict.channel_message);</script></option>
+                      <option value="1"><script type="text/javascript">document.write(dict.direct_message);</script></option>
+                    </select>
+                  </div>
+                  <div class="col-sm-4">
+                    <button id="add-preset" class="btn btn-default btn-block"><script type="text/javascript">document.write(dict.add_preset);</script></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="main-container" id="voice" style="display:none;">
+            <div class="well well-sm well-danger" id="verify-ffmpeg">
+              <p style="text-align:justify;">
+                <b><script type="text/javascript">document.write(dict.find_ffmpeg);</script></b> <script type="text/javascript">document.write(dict.check_ffmpeg);</script>
+              </p>
+            </div>
+            <div class="panel panel-default" data-cp="1" data-vp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-microphone left-icon"></i><script type="text/javascript">document.write(dict.voice_channel);</script></h3>
+              </div>
+              <div class="panel-body">
+                <div class="well well-sm well-primary" style="display:none;"></div>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <select class="form-control">
+                      <option value="0"><script type="text/javascript">document.write(dict.server);</script></option>
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+                    <select class="form-control">
+                      <option value="0"><script type="text/javascript">document.write(dict.channel);</script></option>
+                    </select>
+                  </div>
+                </div>
+                <br>
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <button id="add-preset" class="btn btn-info btn-block"><script type="text/javascript">document.write(dict.join);</script></button>
+                  </div>
+                  <div class="col-sm-6">
+                    <button id="add-preset" class="btn btn-warning btn-block"><script type="text/javascript">document.write(dict.leave);</script></button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="panel panel-default" data-cp="1" data-pl="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-headphones left-icon"></i><script type="text/javascript">document.write(dict.player);</script></h3>
+              </div>
+              <div class="panel-body">
+
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <select class="form-control">
+                      <option value="file"><script type="text/javascript">document.write(dict.from_file);</script></option>
+                      <option value="yt"><script type="text/javascript">document.write(dict.from_yt);</script></option>
+                      <!--
+                      <option value="link">From a link</option>
+                      -->
+                    </select>
+                  </div>
+                  <div class="col-sm-6">
+
+                    <div class="input-group btn-block player-source">
+                      <input type="text" class="form-control pointer" placeholder="Select a file..." readonly data-translation="select-file">
+                      <span class="input-group-addon pointer">
+                        <i class="fas fa-times"></i>
+                      </span>
+                    </div>
+                    <script type="text/javascript">$("[data-translation='select-file']").attr("placeholder", dict.select_file);</script>
+
+                    <div class="input-group btn-block player-source" style="display:none;">
+                      <input type="text" class="form-control" placeholder="YouTube video link..." data-translation="yt-link">
+                      <span class="input-group-addon pointer">
+                        <i class="fas fa-times"></i>
+                      </span>
+                    </div>
+                    <script type="text/javascript">$("[data-translation='yt-link']").attr("placeholder", dict.yt_link);</script>
+
+                    <!--
+                    <div class="input-group btn-block hidden-player" id="pl-link">
+                      <input type="text" class="form-control" placeholder="Audio file link..." id="pl-link-data">
+                      <span class="input-group-addon pointer">
+                        <i class="fas fa-times"></i>
+                      </span>
+                    </div>
+                    -->
+
+                  </div>
+                </div>
+                <br>
+                <ul class="player">
+                  <li>
+                    <i class="fas fa-play"></i>
+                  </li>
+                  <li>
+                    <i class="fas fa-pause"></i>
+                  </li>
+                  <li>
+                    <i class="fas fa-stop"></i>
+                  </li>
+                  <li class="grow">
+                    <!--<input type="range" min="1" max="200" value="0" class="slider">-->
+                  </li>
+                  <li>
+                    <i class="fas fa-volume-down"></i>
+                  </li>
+                  <li class="li-vol">
+                    <input type="range" min="0" max="200" value="50" class="slider">
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!--
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-th-list left-icon"></i>Soundboard</h3>
+              </div>
+              <div class="panel-body">
+
+              </div>
+            </div>
+            -->
+          </div>
+          <div class="main-container" id="experimental" style="display:none;">
+            <div class="well well-sm">
+              <p style="text-align:justify;"><script type="text/javascript">document.write(dict.exp_tab_desc);</script></p>
+            </div>
+
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-info-circle left-icon"></i><script type="text/javascript">document.write(dict.app_info);</script></h3>
+              </div>
+              <div class="panel-body">
+
+                <div class="row split-equal">
+                  <div class="col-sm-6">
+                    <div class="input-group btn-block">
+                      <span class="input-group-addon pointer" data-toggle="tooltip" data-placement="top" title="Node.js version" data-tp-translation="node-version">
+                      <script type="text/javascript">$("[data-tp-translation='node-version']").attr("title", dict.node_version);</script>
+                        <i class="fab fa-node-js"></i>
+                      </span>
+                      <input type="text" class="form-control" id="bot-node" readonly>
+                    </div>
+                    <br>
+                    <div class="input-group btn-block">
+                      <span class="input-group-addon pointer" data-toggle="tooltip" data-placement="top" title="Electron version" data-tp-translation="electron-version">
+                      <script type="text/javascript">$("[data-tp-translation='electron-version']").attr("title", dict.electron_version);</script>
+                        <i class="fas fa-archive"></i>
+                      </span>
+                      <input type="text" class="form-control" id="bot-electron" readonly>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-group btn-block">
+                      <span class="input-group-addon pointer" data-toggle="tooltip" data-placement="top" title="Chromium version" data-tp-translation="chromium-version">
+                      <script type="text/javascript">$("[data-tp-translation='chromium-version']").attr("title", dict.chromium_version);</script>
+                        <i class="fab fa-chrome"></i>
+                      </span>
+                      <input type="text" class="form-control" id="bot-chrome" readonly>
+                    </div>
+                    <br>
+                    <div class="input-group btn-block">
+                      <span class="input-group-addon pointer" data-toggle="tooltip" data-placement="top" title="App version" data-tp-translation="app-version">
+                      <script type="text/javascript">$("[data-tp-translation='app-version']").attr("title", dict.app_version);</script>
+                        <i class="fab fa-js-square"></i>
+                      </span>
+                      <input type="text" class="form-control" id="bot-app" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel panel-default" data-cp="1" data-verb="1" style="display:none;">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-list-ul left-icon"></i><script type="text/javascript">document.write(dict.verbose_log);</script></h3>
+              </div>
+              <div class="panel-body console-body"></div>
+            </div>
+
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-envelope-square left-icon"></i><script type="text/javascript">document.write(dict.dm_feed);</script></h3>
+              </div>
+              <div class="panel-body dm-body" id="dm-feed"></div>
+            </div>
+            <!--
+            <div class="panel panel-default" data-cp="1">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fas fa-puzzle-piece left-icon"></i>Plugins</h3>
+              </div>
+              <div class="panel-body">
+                <button class="btn btn-default btn-block" id="evaltest">test</button>
+              </div>
+            </div>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="aboutModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><script type="text/javascript">document.write(dict.about);</script></h4>
+          </div>
+          <div class="modal-body">
+            <a href="http://source.dog">source.dog</a> &copy; 2019, BotToolkit <span class="version"></span>
+            <br><br>
+            <script type="text/javascript">document.write(dict.powered_by);</script> 
+            <a href="https://electronjs.org/" class="text-a">Electron</a>, 
+            <a href="https://discord.js.org/" class="text-a">Discord.js</a> <script type="text/javascript">document.write(dict.and);</script> 
+            <a href="http://getbootstrap.com/" class="text-a">Bootstrap</a>.
+            <!--
+            <a href="http://bjark.ga/toolkit/resources">Full resource list</a>.
+            -->
+            <br><br>
+            <script type="text/javascript">document.write(dict.direct_feedback);</script>
+            <hr>
+            <script type="text/javascript">document.write(dict.alpha_thanks);</script> <a href="https://deviantart.com/MoonlighttDreams">MoonlighttDreams</a>.
+          </div>
+          <div class="modal-footer">
+            <a href="http://source.dog/toolkit" class="btn btn-success pull-left"><i class="fas fa-globe left-icon"></i><script type="text/javascript">document.write(dict.website);</script></a>
+            <a href="https://github.com/maestr0d/bot-toolkit" class="btn btn-info pull-left"><i class="fab fa-github-square left-icon"></i>GitHub</a>
+            <a href="https://trello.com/b/nLa0eXAJ/discordjs-bot-toolkit" class="btn btn-primary pull-left"><i class="fab fa-trello left-icon"></i>Trello</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><script type="text/javascript">document.write(dict.close);</script></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="changelogModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><span class="version"></span> <script type="text/javascript">document.write(dict.changelog);</script></h4>
+          </div>
+          <div class="modal-body" id="changelog-container"></div>
+          <div class="modal-footer">
+            <a href="http://source.dog/toolkit/versions" class="btn btn-primary pull-left"><script type="text/javascript">document.write(dict.previous_changelogs);</script></a>
+            <button type="button" class="btn btn-default" data-dismiss="modal"><script type="text/javascript">document.write(dict.close);</script></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="keybindModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><script type="text/javascript">document.write(dict.keybinds);</script></h4>
+          </div>
+          <div class="modal-body" id="keybind-container"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"><script type="text/javascript">document.write(dict.close);</script></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./lib/font-awesome/js/fontawesome-all.js"></script>
+    <script src="./lib/bootbox.min.js"></script>
+    <script src="./lib/mousetrap.min.js"></script>
+    <script type="text/javascript"> require('./renderer.js') </script>
+  </body>
+</html>

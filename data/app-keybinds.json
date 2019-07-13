@@ -1,0 +1,38 @@
+[
+	{
+		"keybind" : "Alt + D",
+		"description" : "Toggle debug menu"
+	},
+	{
+		"keybind" : "Ctrl + R",
+		"description" : "Reload the app (If you are logged in, the app will reload safely)"
+	},
+	{
+		"keybind" : "Ctrl + Shift + R",
+		"description" : "Reloads the app without waiting to log out"
+	},
+	{
+		"keybind" : "Ctrl + Q",
+		"description" : "Quit app without waiting to log out"
+	},
+	{
+		"keybind" : "Ctrl + S",
+		"description" : "Save current configuration to file"
+	},
+	{
+		"keybind" : "Ctrl + L",
+		"description" : "Load configuration from file"
+	},
+	{
+		"keybind" : "Ctrl + E",
+		"description" : "Export current configuration file"
+	},
+	{
+		"keybind" : "Ctrl + I",
+		"description" : "Import an existing configuration file"
+	},
+	{
+		"keybind" : "Ctrl + D",
+		"description" : "Remove saved configuration file"
+	}
+]

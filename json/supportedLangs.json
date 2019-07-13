@@ -1,0 +1,98 @@
+[
+  {
+    "text": "None",
+    "value": ""
+  },
+  {
+    "text": "Apache",
+    "value": "apache"
+  },
+  {
+    "text": "Bash",
+    "value": "bash"
+  },
+  {
+    "text": "CoffeeScript",
+    "value": "coffee"
+  },
+  {
+    "text": "C++",
+    "value": "cpp"
+  },
+  {
+    "text": "C#",
+    "value": "cs"
+  },
+  {
+    "text": "CSS",
+    "value": "css"
+  },
+  {
+    "text": "Diff",
+    "value": "diff"
+  },
+  {
+    "text": "HTTP",
+    "value": "http"
+  },
+  {
+    "text": "HTML, XML",
+    "value": "html"
+  },
+  {
+    "text": "Ini",
+    "value": "ini"
+  },
+  {
+    "text": "Java",
+    "value": "java"
+  },
+  {
+    "text": "JavaScript",
+    "value": "js"
+  },
+  {
+    "text": "JSON",
+    "value": "json"
+  },
+  {
+    "text": "Makefile",
+    "value": "makefile"
+  },
+  {
+    "text": "Markdown",
+    "value": "markdown"
+  },
+  {
+    "text": "NGINX",
+    "value": "nginx"
+  },
+  {
+    "text": "Objective-C",
+    "value": "objc"
+  },
+  {
+    "text": "Perl",
+    "value": "perl"
+  },
+  {
+    "text": "PHP",
+    "value": "php"
+  },
+  {
+    "text": "Python",
+    "value": "python"
+  },
+  {
+    "text": "Ruby",
+    "value": "ruby"
+  },
+  {
+    "text": "Shell",
+    "value": "shell"
+  },
+  {
+    "text": "SQL",
+    "value": "sql"
+  }
+]

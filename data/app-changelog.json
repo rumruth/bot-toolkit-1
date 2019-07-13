@@ -1,0 +1,52 @@
+{
+	"version" : "0.1.3",
+	"description" : "Hello! Welcome to the Diploma Update! This update will mostly include features and fixes to make the app more whole and complete. Mostly. Some things will break. Because it wouldn't be any fun if they didn't.",
+	"changes" : {
+		"added" : [
+			"Voice connection volume slider",
+			"Voice connection pause button",
+			"More things translated to Russian",
+			"More verbose log entries",
+			"A menu option that opens a modal listing all available keybinds",
+			"A keybind to toggle the debug menu",
+			"A keybind to quit the app",
+			"The ability to view, create and copy channel invites",
+			"A description for the Trello board",
+			"Automatic locale file loader",
+			"A tip line to the loading screen that should show JS errors in the renderer process during load",
+			"A placeholder to the bot invite URL textarea for clarity",
+			"A tooltip explanation to the language setting option",
+			"A basic plugin engine",
+			"A new plugin directory",
+			"A sample plugin to export the changelog file on a keybind",
+			"Color highlighting to permissions requiring 2-FA",
+			"Status text will show in full when status is hovered"
+		],
+		"removed" : [
+			"The old spinner loading screen (sorry, cat lovers)"
+		],
+		"fixed" : [
+			"Text overflowing the status field",
+			"Config keybind deleting the config without a prompt",
+			"Presets not loading into the message editor with valid data",
+			"Some minor technical errors and issues",
+			"The server/user lists not updating on server join/leave",
+			"Minor grammatical and spelling errors",
+			"Config export keybind not working",
+			"Some videos not being able to be played",
+			"Being able to send requests to play audio without joining a channel",
+			"Error related to checking my Discord username",
+			"The app not changing status on config load success",
+			"Outdated loading screen animation's artist's username",
+			"Outdated copyright year"
+		],
+		"misc" : [
+			"The audio player got a visual overhaul",
+			"Made some file structure changes",
+			"Made the code a very tiny bit cleaner",
+			"Made the dropdown settings a little more pretty and clear",
+			"Moved the audio player to it's own separate class and file",
+			"Swapped the old version checking code for a better solution"
+		]
+	}
+}

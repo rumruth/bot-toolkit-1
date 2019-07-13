@@ -1,0 +1,52 @@
+[
+    {
+        "name": "read_messages",
+        "bitVal" : "0x400",
+        "admin" : "0"
+    },
+    {
+        "name": "send_messages",
+        "bitVal" : "0x800",
+        "admin" : "0"
+    },
+    {
+        "name": "send_tts_messages",
+        "bitVal" : "0x1000",
+        "admin" : "0"
+    },
+    {
+        "name": "embed_links",
+        "bitVal" : "0x4000",
+        "admin" : "0"
+    },
+    {
+        "name": "read_message_history",
+        "bitVal" : "0x10000",
+        "admin" : "0"
+    },
+    {
+        "name": "use_external_emojis",
+        "bitVal" : "0x40000",
+        "admin" : "0"
+    },
+    {
+        "name": "manage_messages",
+        "bitVal" : "0x2000",
+        "admin" : "1"
+    },
+    {
+        "name": "attach_files",
+        "bitVal" : "0x8000",
+        "admin" : "0"
+    },
+    {
+        "name": "mention_everyone",
+        "bitVal" : "0x20000",
+        "admin" : "0"
+    },
+    {
+        "name": "add_reactions",
+        "bitVal" : "0x40",
+        "admin" : "0"
+    }
+]
