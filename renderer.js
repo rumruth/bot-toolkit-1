@@ -227,8 +227,8 @@ $(document).ready(function() {
   });
   //LANGUAGE LOADER
   /* langCodes.json - @author Phil Teare - using wikipedia data */
-  const langCodes = require('./json/langCodes.json');
-  fs.readdir('./locale/', (err, files) => {
+  const langCodes = require(path.resolve(__dirname + "/json/" + "langCodes.json"));
+  fs.readdir(path.resolve(__dirname + "/locale/"), (err, files) => {
     files.forEach(file => {
       var lc = file.split('.')[0];
       $("#app-lang").append(`<option value="${lc}">${langCodes[lc].name}</option>`);
@@ -528,10 +528,10 @@ $(document).ready(function() {
 
     //PLUGIN LOADER
     var plugins = [];
-    fs.readdir('./plugins/', (err, files) => {
-      if (files.length>0) {
+    fs.readdir(path.resolve(__dirname + "/plugins/"), (err, files) => {
+      if (files != undefined && files.length>0) {
         files.forEach(file => {
-          var item = require('./plugins/' + file);
+          var item = require(path.resolve(__dirname + "/plugins/" + file));
           plugins.push(new item({
             fs: fs,
             mt: Mousetrap,
