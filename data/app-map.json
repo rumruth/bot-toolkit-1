@@ -1,0 +1,99 @@
+[
+  {
+    "keywords": ["overview", "data", "stats", "username", "profile"],
+    "tab": "home",
+    "element": "overview"
+  },
+  {
+    "keywords": ["guild", "guild options", "server"],
+    "tab": "home",
+    "element": "guild-options"
+  },
+  {
+    "keywords": ["bot settings"],
+    "tab": "home",
+    "element": "bot-settings"
+  },
+  {
+    "keywords": ["moderation", "kick", "ban"],
+    "tab": "home",
+    "element": "moderation"
+  },
+  {
+    "keywords": ["roles", "assign roles", "role", "add role", "remove role"],
+    "tab": "home",
+    "element": "assign-roles"
+  },
+  {
+    "keywords": ["invites", "invite users", "user invite", "create invite", "add invite"],
+    "tab": "home",
+    "element": "invite-users"
+  },
+  {
+    "keywords": ["invite to server", "server invite", "bot invite", "invite", "invitation", "open link", "link"],
+    "tab": "home",
+    "element": "invite-to-a-server"
+  },
+  {
+    "keywords": ["permissions", "calculator", "permissions calculator", "permission calculator", "permission", "perms"],
+    "tab": "home",
+    "element": "permissions-calculator"
+  },
+  {
+    "keywords": ["settings", "setting", "dark mode", "save settings", "export settings", "language"],
+    "tab": "home",
+    "element": "settings"
+  },
+  {
+    "keywords": ["message", "send", "send message", "direct", "format", "formatting"],
+    "tab": "messaging",
+    "element": "send-message"
+  },
+  {
+    "keywords": ["preset", "presets", "message presets", "save preset", "send preset", "load preset"],
+    "tab": "messaging",
+    "element": "message-presets"
+  },
+  {
+    "keywords" : ["voice", "voice channel", "ffmpeg", "join", "leave"],
+    "tab" : "voice",
+    "element" : "voice-channel"
+  },
+  {
+    "keywords" : ["player", "play", "sound", "youtube", "audio", "pause", "stop", "volume"],
+    "tab" : "voice",
+    "element" : "player"
+  },
+  {
+    "keywords" : ["experiment", "experimental"],
+    "tab" : "experimental",
+    "element" : "experimental"
+  },
+  {
+    "keywords" : ["app info", "info", "app", "version", "chrome", "electron", "chromium", "node", "node.js", "app version"],
+    "tab" : "experimental",
+    "element" : "app-info"
+  },
+  {
+    "keywords" : ["log", "verbose", "verbose log", "long"],
+    "tab" : "experimental",
+    "element" : "verbose-log"
+  },
+  {
+    "keywords" : ["dm", "dm feed", "feed", "dms", "personal"],
+    "tab" : "experimental",
+    "element" : "dm-feed"
+  },
+  {
+    "keywords" : ["changelog", "update", "changes"],
+    "tab" : "changelog"
+  },
+  {
+    "keywords" : ["about", "more info", "testers", "website", "trello", "github", "thanks"],
+    "tab" : "about"
+  },
+  {
+    "keywords" : ["keybinds", "keybind", "hotkeys", "keys", "hot key", "key", "shortcut", "shortcuts"],
+    "tab" : "keybinds"
+  }
+]

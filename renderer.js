@@ -18,21 +18,7 @@ $(document).ready(function() {
   commandExists('ffmpeg', function(err, command) { if(command) $("#verify-ffmpeg").hide(); });
   
   //DEFAULT DATA FALLBACK FOR RESETS
-  const defaults = {
-    settings: { 
-      debug: 0, 
-      token: 0, 
-      tooltips: 0, 
-      verbose: 0,
-      dark: 0,
-      language: "en",
-      updates: 1
-    },
-    identity: { 
-      seen: 0, 
-      version: "0.1.3" 
-    }
-  };
+  const defaults = require(path.resolve(__dirname + "/data/app-defaults.json"));
 
   //APP IDENTITIY SETUP
   storage.has('app-id', function(error, hasKey) {
@@ -61,7 +47,10 @@ $(document).ready(function() {
               //SET SETTING VALUES
               $('#debug-mode').prop('checked', data.debug);
               data.debug?$("#debug-toggle").show():$("#debug-toggle").hide();
-              if (data.debug) Mousetrap.bind('ctrl+a', function(e) { e.preventDefault(); panels.enableAll(); });
+              if (data.debug) {
+                Mousetrap.bind('ctrl+a', function(e) { e.preventDefault(); panels.enableAll(); });
+                Mousetrap.bind('shift+ctrl+i', function(e) { e.preventDefault(); window.toggleDevTools(); });
+              }
               $('#hide-token').prop('checked', data.token);
               data.token?token.hide():token.show();
               $('#disable-tooltips').prop('checked', data.tooltips);
@@ -127,11 +116,17 @@ $(document).ready(function() {
       storage.get('app-keybinds', function(error, data) {
         if (error) throw error;
 
-        var appendLeft = "", appendRight = "";
+        var appendLeft = "", appendRight = "", assignedBadges = "";
 
         for (var i = 0; i < data.length; i++) {
+          if (data[i].badges!=null&&data[i].badges.length>0) {
+            for (var j = 0; j < data[i].badges.length; j++) {
+              assignedBadges += `<span class="badge pull-right" data-toggle="tooltip" data-placement="left" title="${data[i].badges[j].description}">${data[i].badges[j].name}</span>`;
+            }
+          }
           appendLeft += `<div class="well well-sm ${i<data.length-1?'mb-10':'mb-0'}">${data[i].keybind}</div>`;
-          appendRight += `<div class="well well-sm ${i<data.length-1?'mb-10':'mb-0'}">${data[i].description}</div>`;
+          appendRight += `<div class="well well-sm ${i<data.length-1?'mb-10':'mb-0'}">${data[i].description} ${assignedBadges}</div>`;
+          assignedBadges = "";
         }
 
         $("#keybind-container").append(`
@@ -204,9 +199,133 @@ $(document).ready(function() {
   */
 
   //EXPERIMENTAL
-  
+
   //DM FEED
-  ipcRenderer.on('dm-feed', (event, arg) => { $("#dm-feed").append(arg); });
+  ipcRenderer.on('dm-feed', (event, arg) => { 
+    /*$("#dm-feed").append(`
+      <div class="dm-message">${arg}</div>
+    `);*/ 
+    if (($("#dm-feed-users").val()==arg.author.id || $("#dm-feed-users").val()==arg.recipient) && $("#dm-feed-users").val()!=null) {
+      $("#dm-feed").append(`
+        <div class="dm-message">${arg.author.username}: ${arg.content}</div>
+      `);
+    }
+  });
+
+  ipcRenderer.on('return-dm-messages', (event, arg) => { 
+    $("#dm-feed").empty();
+    for (var i = 0; i < arg.length; i++) {
+      $("#dm-feed").append(`
+        <div class="dm-message">${arg[i].author.username}: ${arg[i].content}</div>
+      `);
+    }
+  });
+
+  $("#dm-feed-users").change(function(){
+    ipcRenderer.send("get-dm-messages", {
+      "user" : $("#dm-feed-users").val()
+    });
+  });
+
+  //PANEL SEARCH ENGINE
+  var searchMap = require("./data/app-map.json");
+  //please enable ctrl+a as an exception
+  Mousetrap.bind('ctrl+f', function(e) { 
+    e.preventDefault(); 
+
+    if (!$(".app-body").hasClass("app-body-bar-extended")) {
+      $(".result-count").text("");
+      $(".app-body").addClass("app-body-bar-extended");
+      $(".bottom-bar").addClass("bottom-bar-visible");
+      setTimeout(function(){ $("#bottom-search-input").focus(); }, 500);
+    }
+    else{
+      $(".app-body").removeClass("app-body-bar-extended");
+      $(".bottom-bar").removeClass("bottom-bar-visible");
+      $("#bottom-search-input").blur();
+      $(".result-count").text("");
+    }
+  });
+  
+  $("#bottom-search-button").click(searchAgain);
+
+  var match = [];
+  var searchIndex = 0;
+
+  function getMatches(){
+    var query = $("#bottom-search-input").val();
+
+    for (var i = 0; i < searchMap.length; i++) {
+      for (var j = 0; j < searchMap[i].keywords.length; j++) {
+        if (query.trim().toLowerCase()==searchMap[i].keywords[j]) match.push(searchMap[i]);
+      }
+    }
+
+    if (match.length>0){
+      $(".result-count").text(`${match.length} ${match.length==1?"result":"results"} found`);
+
+      searchPanel(0);
+
+      if (match.length>1) $(".multiple-search-buttons").addClass("msb-show");
+    }
+    else {
+      $(".result-count").text("No results found");
+      $(".multiple-search-buttons").removeClass("msb-show");
+    }
+  }
+
+  function searchAgain(){
+    match = [];
+    $(".result-count").text("");
+    searchPanel();
+  }
+
+  function searchPanel(index){
+    if (match.length>0 && match[index]) {
+      $(`[data-search-tab='${match[index].tab}']`).click();
+
+      if (match[index].element) {
+        $('.main-container').scrollTop(0)
+
+        var offset = $(`[data-search='${match[index].element}']`).offset();
+        $('.main-container').animate({ scrollTop: offset.top-130 });
+      }
+    }
+    else getMatches();
+  }
+
+  $("#next-result-search").click(function(){
+    if (match.length>0) {
+      if (match[searchIndex-1]) {
+        searchIndex--;
+        searchPanel(searchIndex);
+      }
+      else searchPanel(searchIndex);
+    }
+    else searchPanel();
+  });
+
+  $("#prev-result-search").click(function(){
+    if (match.length>0) {
+      if (match[searchIndex+1]) {
+        searchIndex++;
+        searchPanel(searchIndex);
+      }
+      else searchPanel(searchIndex);
+    }
+    else searchPanel();
+  });
+
+  $("#bottom-search-input").keyup(function(e){
+    if(e.keyCode == 13) searchAgain();
+  });
+
+  $("#close-search-panel").click(function(){
+    $(".app-body").removeClass("app-body-bar-extended");
+    $(".bottom-bar").removeClass("bottom-bar-visible");
+    $("#bottom-search-input").blur();
+    $(".result-count").text("");
+  });
 
   //MODAL CLOSE FIX
   $('.modal').on('show.bs.modal', function () {
@@ -226,8 +345,7 @@ $(document).ready(function() {
     }
   });
   //LANGUAGE LOADER
-  /* langCodes.json - @author Phil Teare - using wikipedia data */
-  const langCodes = require(path.resolve(__dirname + "/json/" + "langCodes.json"));
+  const langCodes = require(path.resolve(__dirname + "/lib/" + "langCodes.js"));
   fs.readdir(path.resolve(__dirname + "/locale/"), (err, files) => {
     files.forEach(file => {
       var lc = file.split('.')[0];
@@ -472,6 +590,9 @@ $(document).ready(function() {
     //poplate voice feedback window
     vPanel.setGuild(arg.guilds);
 
+    //DM FEED USER LIST
+    message.populate($("#dm-feed-users"), arg.users.people, dict.user);
+
     if (config.loadPresets) presets.load(config.loadPresets, message, arg.guilds, arg.users.people);
 
     $("#add-preset").click(function(){
@@ -521,6 +642,8 @@ $(document).ready(function() {
 
     //poplate voice feedback window
     vPanel.setGuild(arg.guilds);
+
+    message.populate($("#dm-feed-users"), arg.users.people, dict.user);
   });
 
   //TIMEOUT TO DETECT VERBOSE AND LET EVERYTHING ELSE PROCESS

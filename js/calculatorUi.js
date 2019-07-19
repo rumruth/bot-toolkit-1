@@ -10,9 +10,11 @@ class CalculatorUI {
 
     this.calculator = new Calculator(invite);
 
-    this.general = require('../json/generalPermissions.json');
-    this.text = require('../json/textPermissions.json');
-    this.voice = require('../json/voicePermissions.json');
+    this.permList = require('../data/app-permissions.json'); 
+
+    this.general = this.permList.general;
+    this.text = this.permList.text;
+    this.voice = this.permList.voice;
 
     this.selectGeneral = element.find(".well").eq(0).children(0);
     this.selectText = element.find(".well").eq(1).children(0);

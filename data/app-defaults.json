@@ -1,0 +1,15 @@
+{
+  "settings": { 
+    "debug": 0, 
+    "token": 0, 
+    "tooltips": 0, 
+    "verbose": 0,
+    "dark": 0,
+    "language": "en",
+    "updates": 1
+  },
+  "identity": { 
+    "seen": 0, 
+    "version": "0.1.4" 
+  }
+}

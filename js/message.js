@@ -2,7 +2,7 @@ class Message {
   constructor(element, bootbox, ipc, presets, dict) { 
     this.elem = element;
     this.box = bootbox;
-    this.opts = require('../json/supportedLangs.json');
+    this.opts = require('../data/app-langlist.json');
     this.ipc = ipc;
     this.presets = presets;
     this.dict = dict;
@@ -158,7 +158,7 @@ class Message {
     return arr;
   }
   populate(item, array, placeholder){
-    item.find('option').remove();
+    item.find('option').remove(); //most likely causing the server caching bug
     item.append(`<option value="" selected disabled>${this.dict[placeholder]==undefined?placeholder:this.dict[placeholder]}</option>`);
     for (var i = 0; i < array.length; i++) {
       var itemName = array[i].name;

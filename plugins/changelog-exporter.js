@@ -11,6 +11,19 @@ class plugin {
   	this.verbose = args.vb;
   	this.status = args.status;
   	this.storage = args.storage;
+
+    this.binds = [
+      {
+        "keybind" : "CTRL + C + X",
+        "description" : "Export configuration file",
+        "badges" : [
+          {
+            "name" : "Mod",
+            "description" : `Available as a part of the ${this.name} mod`
+          }
+        ]
+      }
+    ];
   }
   run(){
   	this.mousetrap.bind('ctrl+c+x', (e) => { 
@@ -38,12 +51,28 @@ class plugin {
 			});
 		});
   	});
-  	$("#keybind-container").append(`
-      <div class="row split-equal">
-        <div class="col-sm-3"><div class="well well-sm mt-10 mb-0"}">CTRL + C + X</div></div>
-        <div class="col-sm-9"><div class="well well-sm mt-10 mb-0">Export configuration file</div></div>
+
+    var appendLeft = "", appendRight = "", assignedBadges = "";
+
+    for (var i = 0; i < this.binds.length; i++) {
+      if (this.binds[i].badges!=null&&this.binds[i].badges.length>0) {
+        for (var j = 0; j < this.binds[i].badges.length; j++) {
+          assignedBadges += `<span id="cemod001" class="badge pull-right" data-toggle="tooltip" data-placement="left" title="${this.binds[i].badges[j].description}">${this.binds[i].badges[j].name}</span>`;
+        }
+      }
+      appendLeft += `<div class="well well-sm ${i<this.binds.length-1?'mb-10':'mb-0'}">${this.binds[i].keybind}</div>`;
+      appendRight += `<div class="well well-sm ${i<this.binds.length-1?'mb-10':'mb-0'}">${this.binds[i].description} ${assignedBadges}</div>`;
+      assignedBadges = "";
+    }
+
+    $("#keybind-container").append(`
+      <div class="row split-equal mt-10">
+        <div class="col-sm-3">${appendLeft}</div>
+        <div class="col-sm-9">${appendRight}</div>
       </div>
     `);
+
+    $('#cemod001').tooltip();
   }
 }
 module.exports = plugin;

@@ -49,9 +49,9 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu dark-dropdown">
-            <li><a href="#" data-toggle="modal" data-target="#aboutModal"><script type="text/javascript">document.write(dict.about);</script></a></li>
-            <li><a href="#" data-toggle="modal" data-target="#changelogModal"><script type="text/javascript">document.write(dict.changelog);</script></a></li>
-            <li><a href="#" data-toggle="modal" data-target="#keybindModal"><script type="text/javascript">document.write(dict.keybinds);</script></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#aboutModal" data-search-tab="about"><script type="text/javascript">document.write(dict.about);</script></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#changelogModal" data-search-tab="changelog"><script type="text/javascript">document.write(dict.changelog);</script></a></li>
+            <li><a href="#" data-toggle="modal" data-target="#keybindModal" data-search-tab="keybinds"><script type="text/javascript">document.write(dict.keybinds);</script></a></li>
             <!--<li><a href="https://source.dog/toolkit/docs">Documentation</a></li>-->
           </ul>
         </div>
@@ -119,14 +119,13 @@
     <nav class="navbar navbar-inverse navbar2">
       <div class="container-fluid nav-container">
         <div class="navbar-header header-bleak pull-right" data-wc="1">
-          <a class="navbar-brand" style="transform:translate(0px, -5px);" href="#"><i class="fas fa-window-minimize"></i></a>
+          <a class="navbar-brand" href="#"><i class="fas fa-thumbtack"></i></a>
+          <a class="navbar-brand" style="transform:translate(0px, -5px);" href="#"><i class="fas fa-window-minimize wm-1"></i></a>
           <a class="navbar-brand" href="#"><i class="fas fa-window-maximize"></i></a>
           <a class="navbar-brand" href="#"><i class="fas fa-window-close"></i></a>
         </div>
       </div>
     </nav>
-
-
 
     <div class="container-fluid app-body">
       <div class="row split-equal">
@@ -140,30 +139,27 @@
               <h3 class="panel-title"><i class="fas fa-id-card left-icon"></i><script type="text/javascript">document.write(dict.bot_info);</script></h3>
             </div>
             <div class="panel-body" id="info">
-              <div class="input-group btn-block">
+              <div class="input-group btn-block mb-15">
                 <span class="input-group-addon pointer" id="bot-pic"></span>
                 <div id="full-pic"><img src=""></div>
                 <input id="bot-name" type="text" class="form-control" readonly>
               </div>
-              <br>
-              <select class="form-control" id="bot-status">
+              <select class="form-control mb-15" id="bot-status">
                 <option value="online"><script type="text/javascript">document.write(dict.online);</script></option>
                 <option value="idle"><script type="text/javascript">document.write(dict.idle);</script></option>
                 <option value="dnd"><script type="text/javascript">document.write(dict.dnd);</script></option>
                 <option value="invisible"><script type="text/javascript">document.write(dict.invisible);</script></option>
               </select>
-              <br>
-              <input type="text" class="form-control" placeholder="Game playing" id="bot-game" data-translation="bot-game">
+              <input type="text" class="form-control mb-15" placeholder="Game playing" id="bot-game" data-translation="bot-game">
               <script type="text/javascript">$("[data-translation='bot-game']").attr("placeholder", dict.game_playing);</script>
-              <br>
               <button type="button" class="btn btn-info btn-block" id="set-presence"><script type="text/javascript">document.write(dict.save_changes);</script></button>
             </div>
           </div>
           <div class="list-group">
-            <a href="#" data-target="home" class="side-menu list-group-item active"><i class="fas fa-home left-icon"></i><script type="text/javascript">document.write(dict.home);</script></a>
-            <a href="#" data-target="messaging" class="side-menu list-group-item"><i class="fas fa-comment left-icon"></i><script type="text/javascript">document.write(dict.messaging);</script></a>
-            <a href="#" data-target="voice" class="side-menu list-group-item"><i class="fas fa-microphone left-icon"></i><script type="text/javascript">document.write(dict.voice);</script></a>
-            <a href="#" data-target="experimental" class="side-menu list-group-item"><i class="fas fa-flask left-icon"></i><script type="text/javascript">document.write(dict.experimental);</script></a>
+            <a href="#" data-target="home" data-search-tab="home" class="side-menu list-group-item active"><i class="fas fa-home left-icon"></i><script type="text/javascript">document.write(dict.home);</script></a>
+            <a href="#" data-target="messaging" data-search-tab="messaging" class="side-menu list-group-item"><i class="fas fa-comment left-icon"></i><script type="text/javascript">document.write(dict.messaging);</script></a>
+            <a href="#" data-target="voice" data-search-tab="voice" class="side-menu list-group-item"><i class="fas fa-microphone left-icon"></i><script type="text/javascript">document.write(dict.voice);</script></a>
+            <a href="#" data-target="experimental" data-search-tab="experimental" class="side-menu list-group-item"><i class="fas fa-flask left-icon"></i><script type="text/javascript">document.write(dict.experimental);</script></a>
           </div>
         </div>
         <div class="col-sm-8">
@@ -178,7 +174,7 @@
               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
               <strong><script type="text/javascript">document.write(dict.new_version_available);</script></strong> <script type="text/javascript">document.write(dict.new_version_data);</script>
             </div>
-            <div class="panel panel-default" data-cp="1">
+            <div class="panel panel-default" data-cp="1" data-search="overview">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-chart-line left-icon"></i><script type="text/javascript">document.write(dict.overview);</script></h3>
               </div>
@@ -242,7 +238,7 @@
               </div>
             </div>
 
-            <div class="panel panel-default" data-cp="1">
+            <div class="panel panel-default" data-cp="1" data-search="guild-options">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-flag left-icon"></i><script type="text/javascript">document.write(dict.guild_options);</script></h3>
               </div>
@@ -251,7 +247,7 @@
                   <option value=""><script type="text/javascript">document.write(dict.server);</script></option>
                 </select>
                 <br>
-                <div class="well well-sm"><script type="text/javascript">document.write(dict.bot_settings);</script></div>
+                <div class="well well-sm" data-search="bot-settings"><script type="text/javascript">document.write(dict.bot_settings);</script></div>
                 <div class="row split-equal">
                   <div class="col-sm-8">
                     <input type="text" class="form-control" placeholder="Nickname" data-translation="nickname">
@@ -262,7 +258,7 @@
                   </div>
                 </div>
                 <br>
-                <div class="well well-sm"><script type="text/javascript">document.write(dict.moderation);</script></div>
+                <div class="well well-sm" data-search="moderation"><script type="text/javascript">document.write(dict.moderation);</script></div>
                 <div class="row split-equal">
                   <div class="col-sm-6">
                     <select class="form-control">
@@ -282,7 +278,7 @@
                     <input type="text" class="form-control" placeholder="User id" data-translation="user-id">
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" class="form-control"  data-toggle="tooltip" data-placement="top" title="Number of days of messages to delete (bans only)" placeholder="Days" data-translation="days" data-tp-translation="days-description">
+                    <input type="text" class="form-control" data-toggle="tooltip" data-placement="top" title="Number of days of messages to delete (bans only)" placeholder="Days" data-translation="days" data-tp-translation="days-description">
                     <script type="text/javascript">
                       $("[data-tp-translation='days-description']").attr("title", dict.days_description);
                       $("[data-translation='days']").attr("placeholder", dict.days);
@@ -295,7 +291,7 @@
                 <br>
                 <button type="button" class="btn btn-info btn-block"><script type="text/javascript">document.write(dict.go);</script></button>
                 <br>
-                <div class="well well-sm"><script type="text/javascript">document.write(dict.assign_roles);</script></div>
+                <div class="well well-sm" data-search="assign-roles"><script type="text/javascript">document.write(dict.assign_roles);</script></div>
                 <select class="form-control">
                   <option value="" selected disabled><script type="text/javascript">document.write(dict.role);</script></option>
                 </select>
@@ -321,8 +317,8 @@
                   </div>
                 </div>
                 <br>
-                <div class="well well-sm"><script type="text/javascript">document.write(dict.invite_users);</script></div>
-                <div class="well well-sm"><script type="text/javascript">document.write(dict.no_invites_msg);</script><center></center></div>
+                <div class="well well-sm" data-search="invite-users"><script type="text/javascript">document.write(dict.invite_users);</script></div>
+                <div class="well well-sm invite-box"><script type="text/javascript">document.write(dict.no_invites_msg);</script><center></center></div>
                 <div class="row split-equal">
                   <div class="col-sm-8">
                     <select class="form-control">
@@ -336,7 +332,7 @@
               </div>
             </div>
 
-            <div class="panel panel-default" data-cp="1">
+            <div class="panel panel-default" data-cp="1" data-search="invite-to-a-server">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-cloud-upload-alt left-icon"></i><script type="text/javascript">document.write(dict.invite_to_server);</script></h3>
               </div>
@@ -365,7 +361,7 @@
                 </div>
               </div>
             </div>
-            <div class="panel panel-default" data-cp="1">
+            <div class="panel panel-default" data-cp="1" data-search="permissions-calculator">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-calculator left-icon"></i><script type="text/javascript">document.write(dict.permissions_calculator);</script></h3>
               </div>
@@ -398,7 +394,7 @@
                 </div>
               </div>
             </div>
-            <div class="panel panel-default" data-cp="1">
+            <div class="panel panel-default" data-cp="1" data-search="settings">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-cog left-icon"></i><script type="text/javascript">document.write(dict.settings);</script></h3>
               </div>
@@ -469,7 +465,7 @@
             </div>
           </div>
           <div class="main-container" id="messaging" style="display:none;">
-            <div class="panel panel-default" data-cp="1" data-msg="1">
+            <div class="panel panel-default" data-cp="1" data-msg="1" data-search="send-message">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-envelope left-icon"></i><script type="text/javascript">document.write(dict.send_message);</script></h3>
               </div>
@@ -526,7 +522,7 @@
               </div>
             </div>
             
-            <div class="panel panel-default" data-cp="1">
+            <div class="panel panel-default" data-cp="1" data-search="message-presets">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-envelope-open left-icon"></i><script type="text/javascript">document.write(dict.message_presets);</script></h3>
               </div>
@@ -545,7 +541,6 @@
                 </div>
               </div>
             </div>
-
           </div>
           <div class="main-container" id="voice" style="display:none;">
             <div class="well well-sm well-danger" id="verify-ffmpeg">
@@ -553,7 +548,7 @@
                 <b><script type="text/javascript">document.write(dict.find_ffmpeg);</script></b> <script type="text/javascript">document.write(dict.check_ffmpeg);</script>
               </p>
             </div>
-            <div class="panel panel-default" data-cp="1" data-vp="1">
+            <div class="panel panel-default" data-cp="1" data-vp="1" data-search="voice-channel">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-microphone left-icon"></i><script type="text/javascript">document.write(dict.voice_channel);</script></h3>
               </div>
@@ -584,7 +579,7 @@
               </div>
             </div>
 
-            <div class="panel panel-default" data-cp="1" data-pl="1">
+            <div class="panel panel-default" data-cp="1" data-pl="1" data-search="player">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-headphones left-icon"></i><script type="text/javascript">document.write(dict.player);</script></h3>
               </div>
@@ -664,11 +659,11 @@
             -->
           </div>
           <div class="main-container" id="experimental" style="display:none;">
-            <div class="well well-sm">
+            <div class="well well-sm" data-search="experimental">
               <p style="text-align:justify;"><script type="text/javascript">document.write(dict.exp_tab_desc);</script></p>
             </div>
 
-            <div class="panel panel-default" data-cp="1">
+            <div class="panel panel-default" data-cp="1" data-search="app-info">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-info-circle left-icon"></i><script type="text/javascript">document.write(dict.app_info);</script></h3>
               </div>
@@ -713,19 +708,22 @@
               </div>
             </div>
 
-            <div class="panel panel-default" data-cp="1" data-verb="1" style="display:none;">
+            <div class="panel panel-default" data-cp="1" data-verb="1" style="display:none;" data-search="verbose-log">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-list-ul left-icon"></i><script type="text/javascript">document.write(dict.verbose_log);</script></h3>
               </div>
               <div class="panel-body console-body"></div>
             </div>
 
-            <div class="panel panel-default" data-cp="1">
+            <div class="panel panel-default" data-cp="1" data-search="dm-feed">
               <div class="panel-heading">
                 <h3 class="panel-title"><i class="fas fa-envelope-square left-icon"></i><script type="text/javascript">document.write(dict.dm_feed);</script></h3>
               </div>
-              <div class="panel-body dm-body" id="dm-feed"></div>
-            </div>
+              <div class="panel-body">
+                <select class="form-control" id="dm-feed-users"></select>
+                <br>
+                <div class="well well-sm dm-body" id="dm-feed"></div>
+              </div>
             <!--
             <div class="panel panel-default" data-cp="1">
               <div class="panel-heading">
@@ -736,9 +734,30 @@
               </div>
             </div>
             -->
+            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="bottom-bar">
+      <input type="text" class="bottom-search mousetrap" name="" id="bottom-search-input" placeholder="Search the interface">
+      <button class="bottom-search" id="bottom-search-button">
+        <i class="fas fa-search"></i>
+      </button>
+      <div class="multiple-search-buttons">
+        <button class="bottom-search" id="next-result-search">
+          <i class="fas fa-chevron-up"></i>
+        </button>
+        <button class="bottom-search" id="prev-result-search">
+          <i class="fas fa-chevron-down"></i>
+        </button>
+      </div>
+      <div class="extra-data result-count"></div>
+      <div class="grow"></div>
+      <!--<div class="extra-data"><span class="version"></div>-->
+      <button class="bottom-search" id="close-search-panel">
+        <i class="fas fa-times"></i>
+      </button>
     </div>
     <div class="modal fade" id="aboutModal" role="dialog">
       <div class="modal-dialog">

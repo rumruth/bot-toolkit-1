@@ -1,0 +1,153 @@
+{
+	"general" : [
+	    {
+	        "name": "administrator",
+	        "bitVal" : "0x8",
+	        "admin" : "1"
+	    },
+	    {
+	        "name": "view_audit_log",
+	        "bitVal" : "0x80",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "manage_server",
+	        "bitVal" : "0x20",
+	        "admin" : "1"
+	    },
+	    {
+	        "name": "manage_roles",
+	        "bitVal" : "0x10000000",
+	        "admin" : "1"
+	    },
+	    {
+	        "name": "manage_channels",
+	        "bitVal" : "0x10",
+	        "admin" : "1"
+	    },
+	    {
+	        "name": "kick_members",
+	        "bitVal" : "0x2",
+	        "admin" : "1"
+	    },
+	    {
+	        "name": "ban_members",
+	        "bitVal" : "0x4",
+	        "admin" : "1"
+	    },
+	    {
+	        "name": "create_instant_invite",
+	        "bitVal" : "0x1",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "change_nickname",
+	        "bitVal" : "0x4000000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "manage_nicknames",
+	        "bitVal" : "0x8000000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "manage_emojis",
+	        "bitVal" : "0x40000000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "manage_webhooks",
+	        "bitVal" : "0x20000000",
+	        "admin" : "1"
+	    }
+	],
+	"text" : [
+	    {
+	        "name": "read_messages",
+	        "bitVal" : "0x400",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "send_messages",
+	        "bitVal" : "0x800",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "send_tts_messages",
+	        "bitVal" : "0x1000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "embed_links",
+	        "bitVal" : "0x4000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "read_message_history",
+	        "bitVal" : "0x10000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "use_external_emojis",
+	        "bitVal" : "0x40000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "manage_messages",
+	        "bitVal" : "0x2000",
+	        "admin" : "1"
+	    },
+	    {
+	        "name": "attach_files",
+	        "bitVal" : "0x8000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "mention_everyone",
+	        "bitVal" : "0x20000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "add_reactions",
+	        "bitVal" : "0x40",
+	        "admin" : "0"
+	    }
+	],
+	"voice" : [
+	    {
+	        "name": "view_channel",
+	        "bitVal" : "0x400",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "connect",
+	        "bitVal" : "0x100000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "mute_members",
+	        "bitVal" : "0x400000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "move_members",
+	        "bitVal" : "0x1000000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "speak",
+	        "bitVal" : "0x200000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "deafen_members",
+	        "bitVal" : "0x800000",
+	        "admin" : "0"
+	    },
+	    {
+	        "name": "use_voice_activity",
+	        "bitVal" : "0x2000000",
+	        "admin" : "0"
+	    }
+	]
+}

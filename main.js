@@ -51,7 +51,7 @@ var isOut = false;
 //RENDERER INTERACTION
 ipcMain.on('login', (event, arg) => { 
   client.login(arg).then(function() {
-
+    //check for dupe bug
     var guilds = [], people = [], bots = [];
     for (var i = 0; i < client.guilds.size; i++) {
       var channelList = client.guilds.map(g => g.channels)[i];
@@ -116,6 +116,11 @@ ipcMain.on('send-msg', (event, arg) => {
   else{
     client.users.get(arg.id).send(arg.content).then(function() {
       mainWindow.webContents.send('success', "message_sent");
+      mainWindow.webContents.send('dm-feed', {
+        author: client.user,
+        recipient: arg.id,
+        content : arg.content
+      });
     }, function(err) {
       mainWindow.webContents.send('err', err);
     });
@@ -152,7 +157,18 @@ ipcMain.on('create-invite', (event, arg) => {
       mainWindow.webContents.send('success', "invite_created");
       client.guilds.get(arg.guild).fetchInvites()
       .then(invites => {
-        if (invites.size==0) mainWindow.webContents.send('receive-invites', []);
+        if (invites.size==0) {
+          console.log(invite);
+          if (invite) {
+            tempData.push({
+              url: "http://discord.gg/" + invite.code,
+              code: invite.code,
+              channel: invite.name,
+              madeBy: invites.inviter.username + "#" + invites.inviter.discriminator
+            });
+            mainWindow.webContents.send('receive-invites', []);
+          }
+        }
         else{
           var tempData = [];
           for (var i = 0; i < invites.size; i++) {
@@ -167,11 +183,11 @@ ipcMain.on('create-invite', (event, arg) => {
         }
       })
       .catch(err => {
+        mainWindow.webContents.send('err', err.message);
         mainWindow.webContents.send('receive-invites', []);
       });
     }).catch(err => {
-      console.log(err);
-      mainWindow.webContents.send('err', JSON.stringify(err));
+      mainWindow.webContents.send('err', err.message);
       mainWindow.webContents.send('receive-invites', []);
     });
   }
@@ -256,6 +272,7 @@ ipcMain.on('act-user', (event, arg) => {
   if (arg.act=="0") {
     client.guilds.get(arg.guild).members.get(arg.user).kick(arg.reason).then(() => {
       mainWindow.webContents.send('success', "member_kicked");
+      sendGuilds();
     })
     .catch(function(err) { mainWindow.webContents.send('err', err.message); });
   }
@@ -267,6 +284,7 @@ ipcMain.on('act-user', (event, arg) => {
       days: banDays
     }).then(() => {
       mainWindow.webContents.send('success', "member_banned");
+      sendGuilds();
     })
     .catch(function(err) { mainWindow.webContents.send('err', err.message); });
   }
@@ -323,6 +341,29 @@ ipcMain.on('set-presence', (event, arg) => {
 });
 
 //EXPERIMENTAL
+ipcMain.on('get-dm-messages', (event, arg) => {
+  if (client.users.get(arg.user).lastMessage!=null) {
+    client.users.get(arg.user).lastMessage.channel.fetchMessages({ limit: 10 }).then(messages => {
+      //console.log(messages);
+      var parsedMessages = [];
+
+      for (var i = 0; i < messages.size; i++) {
+        parsedMessages.push({
+          author: messages.map(g => g.author)[i],
+          content: messages.map(g => g.content)[i]
+        });
+      }
+
+      parsedMessages.reverse();
+
+      mainWindow.webContents.send('return-dm-messages', parsedMessages);
+    })
+    .catch(console.error);
+  }
+  else{
+    mainWindow.webContents.send('return-dm-messages', []);
+  }
+});
 
 ipcMain.on('join-vc', (event, arg) => {
   var vc = client.channels.get(arg.channel);
@@ -468,5 +509,22 @@ client.on("guildDelete", guild => {
   sendGuilds();
 });
 
+client.on('guildMemberAdd', member => {
+  mainWindow.webContents.send('newEvent', `New user has joined ${member.guild.name}`);
+  sendGuilds();
+});
+
+client.on('guildMemberRemove', member => {
+  mainWindow.webContents.send('newEvent', `A user has left ${member.guild.name}`);
+  sendGuilds();
+});
+
 client.on('disconnect', function () { if(!isOut) mainWindow.webContents.send('loggedOut'); });
-client.on('message', function (message) { if (message.guild === null) mainWindow.webContents.send('dm-feed', message.author.username + "#" + message.author.discriminator + ": " + message.content + "<br>"); });
+client.on('message', function (message) { 
+  if (message.guild === null) {
+    mainWindow.webContents.send('dm-feed', {
+      author: message.author,
+      content : message.content
+    });
+  }
+});

@@ -5,7 +5,7 @@
 	},
 	{
 		"keybind" : "Ctrl + R",
-		"description" : "Reload the app (If you are logged in, the app will reload safely)"
+		"description" : "Reload the app (if logged in, the app will reload safely)"
 	},
 	{
 		"keybind" : "Ctrl + Shift + R",
@@ -34,5 +34,25 @@
 	{
 		"keybind" : "Ctrl + D",
 		"description" : "Remove saved configuration file"
+	},
+	{
+		"keybind" : "Ctrl + A",
+		"description" : "Enable all panels",
+		"badges" : [
+			{
+				"name" : "Debug",
+				"description" : "Available only in debug mode"
+			}
+		]
+	},
+	{
+		"keybind" : "Shift + Ctrl + I",
+		"description" : "Toggle devtools",
+		"badges" : [
+			{
+				"name" : "Debug",
+				"description" : "Available only in debug mode"
+			}
+		]
 	}
 ]
