@@ -106,15 +106,19 @@ ipcMain.on('login', (event, arg) => {
   });
 });
 ipcMain.on('send-msg', (event, arg) => {
+  var filesToSend = [];
+  if (arg.files.length>0) filesToSend = arg.files;
+  console.log(filesToSend);
+
   if (arg.type=="0") {
-    client.guilds.get(arg.server).channels.get(arg.channel).send(arg.content).then(function() {
+    client.guilds.get(arg.server).channels.get(arg.channel).send(arg.content, {files: filesToSend}).then(function() {
       mainWindow.webContents.send('success', "message_sent");
     }, function(err) {
       mainWindow.webContents.send('err', err);
     });
   }
   else{
-    client.users.get(arg.id).send(arg.content).then(function() {
+    client.users.get(arg.id).send(arg.content, {files: filesToSend}).then(function() {
       mainWindow.webContents.send('success', "message_sent");
       mainWindow.webContents.send('dm-feed', {
         author: client.user,
@@ -225,6 +229,7 @@ ipcMain.on('get-members', (event, arg) => {
   //console.log(arg);
   //kick act 0, ban act 1
   var guildMembers = [];
+    console.log(arg.act);
 
   for (var i = 0; i < client.guilds.get(arg.guild).members.size; i++) {
     if (arg.act=="0") {
@@ -245,8 +250,20 @@ ipcMain.on('get-members', (event, arg) => {
         });
       }
     }
+    else {
+      guildMembers.push({
+        id: client.guilds.get(arg.guild).members.map(g => g.user.id)[i],
+        disc: client.guilds.get(arg.guild).members.map(g => g.user.discriminator)[i],
+        name: client.guilds.get(arg.guild).members.map(g => g.user.username)[i]
+      });
+    }
   }
-  mainWindow.webContents.send('take-members', guildMembers);
+  if (arg.act == undefined) {
+    mainWindow.webContents.send('take-members-pure', guildMembers);
+  }
+  else{
+    mainWindow.webContents.send('take-members', guildMembers);
+  }
 });
 ipcMain.on('get-roles', (event, arg) => {
   var guildRoles = [];
@@ -290,6 +307,8 @@ ipcMain.on('act-user', (event, arg) => {
   }
 });
 ipcMain.on('add-role', (event, arg) => { 
+  //console.log(client.guilds.get(arg.guild).members.get(arg.user));
+
   client.guilds.get(arg.guild).members.get(arg.user).addRole(arg.role).then(() => {
     mainWindow.webContents.send('success', "member_role_added");
   })

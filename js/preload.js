@@ -4,4 +4,5 @@ window.onerror = function(error, url, line) {
 };
 
 var aSettings = require("../data/app-settings.json");
-dict = require('../locale/' + aSettings.language + '.json');
+dict = require('../locale/dict/' + aSettings.language + '.json');
+searchMap = require('../locale/keys/keys_' + aSettings.language + '.json');

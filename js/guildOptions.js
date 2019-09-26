@@ -32,7 +32,13 @@ class guildOptions {
       this.ipc.send("get-nick", this.server.val()); 
       this.ipc.send("get-members", { guild: this.server.val(), act: this.act.val() }); 
       this.ipc.send("get-roles", { guild: this.server.val(), act: this.act.val() }); 
+
+      this.ipc.send("get-members", { guild: this.server.val() }); 
     });
+    /*
+    this.role.change(() => { 
+      this.ipc.send("get-members", { guild: this.server.val() }); 
+    });*/
     this.act.change(() => { 
       this.ipc.send("get-members", { guild: this.server.val(), act: this.act.val() }); 
     });
@@ -69,8 +75,11 @@ class guildOptions {
     this.roleTargetID.keyup(() => { this.roleTarget.val(this.roleTargetID.val()); });
 
     this.ipc.on('take-nick', (event, arg) => { if (arg) this.nick.val(arg); });
-    this.ipc.on('take-members', (event, arg) => { 
+    this.ipc.on('take-members', (event, arg) => {
       this.msg.populate(this.member, arg, this.dict.member); 
+    });
+
+    this.ipc.on('take-members-pure', (event, arg) => {
       this.msg.populate(this.roleTarget, arg, this.dict.member); 
     });
 

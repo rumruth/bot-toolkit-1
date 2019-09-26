@@ -249,5 +249,6 @@
 	"playback_complete" : "Playback complete!",
 	"pausing_audio_file" : "Pausing audio file...",
 	"stopping_audio_file" : "Stopping audio file...",
-	"channel_left" : "Channel left!"
+	"channel_left" : "Channel left!",
+	"send_file" : "Send file"
 }

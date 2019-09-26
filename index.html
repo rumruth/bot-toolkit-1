@@ -10,8 +10,10 @@
     <script type="text/javascript">
       window.$ = window.jQuery = require('./lib/jquery-3.3.1.min.js');
     </script>
+
     <script type="text/javascript">
       var dict;
+      var searchMap;
       var crashed = false;
       require('./js/preload.js'); 
     </script>
@@ -504,6 +506,7 @@
                   <button type="button" class="btn btn-default" data-wrap="`" data-toggle="tooltip" data-placement="top" title="Highlight" data-tp-translation="highlight"><i class="fas fa-h-square"></i></button>
                   <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Code markup" data-tp-translation="code-markup"><i class="fas fa-code"></i></button>
                   <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Mention user" data-tp-translation="mention-user"><i class="fas fa-at"></i></button>
+                  <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Send file" data-tp-translation="send-file"><i class="fas fa-paperclip"></i></button>
                 </div>
                 <script type="text/javascript">$("[data-tp-translation='bold']").attr("title", dict.bold);</script>
                 <script type="text/javascript">$("[data-tp-translation='italic']").attr("title", dict.italic);</script>
@@ -512,12 +515,17 @@
                 <script type="text/javascript">$("[data-tp-translation='highlight']").attr("title", dict.highlight);</script>
                 <script type="text/javascript">$("[data-tp-translation='code-markup']").attr("title", dict.code_markup);</script>
                 <script type="text/javascript">$("[data-tp-translation='mention-user']").attr("title", dict.mention_user);</script>
+                <script type="text/javascript">$("[data-tp-translation='send-file']").attr("title", dict.send_file);</script>
                 <div class="pull-right">
                   <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Toggle typing status" data-tp-translation="toggle-typing-status" disabled><i class="fas fa-keyboard"></i></button>
                   <script type="text/javascript">$("[data-tp-translation='toggle-typing-status']").attr("title", dict.toggle_typing_status);</script>
                   <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Save preset" data-tp-translation="save-preset"><i class="fas fa-save"></i></button>
                   <script type="text/javascript">$("[data-tp-translation='save-preset']").attr("title", dict.save_preset);</script>
                   <button class="btn btn-info"><script type="text/javascript">document.write(dict.send);</script></button>
+                </div>
+                <div class="well well-sm well-default mt-10 mb-0" style="display: none;">
+                  <span></span>
+                  <span class="badge pull-right pointer"><i class="fas fa-times"></i></span>
                 </div>
               </div>
             </div>

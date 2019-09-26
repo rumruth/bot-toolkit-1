@@ -1,23 +1,19 @@
 {
-	"version" : "0.1.4",
-	"description" : "Hi! This is a follow up to the previous version. I'm gonna keep adding minor features and those that would be suggested for the diploma project from here on out until i complete it.",
+	"version" : "0.1.6",
+	"description" : "More general fixes and q-o-l improvements.",
 	"changes" : {
 		"added" : [
-			"Category badges that add additional details to keybinds to keybind description boxes",
-			"A search bar and function for the app panels",
-			"A button to pin the window to always stay on top and accompanying class methods",
-			"A badge indicator for a keybind's purpose and origin"
+			"The ability to attach a file to your message! Yay!",
+			"Another example plugin to shorten bot invite URLs"
 		],
 		"removed" : [
 		],
 		"fixed" : [
-			"Updated error message catching for missing invites"
+			"Preset being created even when cancelling the prompt",
+			"Ambiguous select issues whenever the bot has no kick/ban rights"
 		],
 		"misc" : [
-			"Various file structure changes",
-			"Modified the DM feed panel to include a user selector",
-			"Restructured the sample Changelog exporter mod",
-			"Various CSS changes and adjustments"
+			"Ctrl + A was changed to Ctrl + Shift + A to avoid conflict with text selection shortcut"
 		]
 	}
 }

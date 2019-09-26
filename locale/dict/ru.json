@@ -249,5 +249,6 @@
 	"playback_complete" : "Проигрывание завершено!",
 	"pausing_audio_file" : "Ставим ауйдио на паузу...",
 	"stopping_audio_file" : "Останавливаем аудио...",
-	"channel_left" : "Вышли из канала!"
+	"channel_left" : "Вышли из канала!",
+	"send_file" : "Отправить файл"
 }

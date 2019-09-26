@@ -1,11 +1,14 @@
 class Message {
-  constructor(element, bootbox, ipc, presets, dict) { 
+  constructor(element, bootbox, ipc, presets, dict, dialog, path, os) { 
     this.elem = element;
     this.box = bootbox;
     this.opts = require('../data/app-langlist.json');
     this.ipc = ipc;
     this.presets = presets;
     this.dict = dict;
+    this.dialog = dialog;
+    this.path = path;
+    this.os = os;
 
     this.guild;
     this.people;
@@ -25,9 +28,17 @@ class Message {
     this.pickCode = element.find("button").eq(5);
     this.pickUser = element.find("button").eq(6);
 
-    this.typing = element.find("button").eq(7);
-    this.save = element.find("button").eq(8);
-    this.send = element.find("button").eq(9);
+    this.sendImage = element.find("button").eq(7);
+
+    this.typing = element.find("button").eq(8);
+    this.save = element.find("button").eq(9);
+    this.send = element.find("button").eq(10);
+
+    this.well = element.find(".well").eq(0);
+    this.wellText = this.well.find("span").eq(0);
+    this.wellClose = this.well.find("span").eq(1);
+
+    this.filesAttached = ["https://files.source.dog/dump/garbage/pics/A_A_A_C_A_T.png"];
 
     this.kind.change(() => {
       if (this.kind.val()=="0") {
@@ -98,8 +109,9 @@ class Message {
         size: 'small',
         backdrop: true,
         callback: (e) => {
+          if (e===null) return;
           var name = e;
-          if (!e) name = this.dict.untitled;
+          if (e=="") name = this.dict.untitled;
           this.presets.new({
             name: name,
             type : this.kind.val(),
@@ -121,8 +133,14 @@ class Message {
         channel: this.chan.val(),
         user: this.user.val(),
         id: this.userId.val(),
-        content : this.text.val()
+        content : this.text.val(),
+        files: this.filesAttached
       });
+
+      this.well.hide();
+      this.wellText.text("");
+      this.filesAttached = [];
+
       setTimeout(function(){ if (this.user != undefined && this.user.val()) this.ipc.send("validate-dm", this.userId.val()); }, 1000);
     });
 
@@ -150,6 +168,26 @@ class Message {
         });
       }
     });
+
+    this.sendImage.click(() => {
+      this.dialog.showOpenDialog({
+          title: "Select image",
+          defaultPath: this.path.join(this.os.homedir(), 'Desktop')
+        }, (fileNames) => {
+          if (fileNames === undefined){ return; }
+          var fileName = fileNames[0];
+          
+          this.filesAttached = [fileName];
+          this.wellText.text(fileName);
+          this.well.show();
+
+          this.wellClose.click(() => {
+            this.well.hide();
+            this.wellText.text("");
+            this.filesAttached = [];
+          });
+      });
+    });
   }
   options(item){
     var arr = [];
@@ -160,10 +198,12 @@ class Message {
   populate(item, array, placeholder){
     item.find('option').remove(); //most likely causing the server caching bug
     item.append(`<option value="" selected disabled>${this.dict[placeholder]==undefined?placeholder:this.dict[placeholder]}</option>`);
-    for (var i = 0; i < array.length; i++) {
-      var itemName = array[i].name;
-      if (array[i].disc) itemName = array[i].name+"#"+array[i].disc;
-      item.append(`<option value="${array[i].id}">${itemName}</option>`);
+    if (array) {
+      for (var i = 0; i < array.length; i++) {
+        var itemName = array[i].name;
+        if (array[i].disc) itemName = array[i].name+"#"+array[i].disc;
+        item.append(`<option value="${array[i].id}">${itemName}</option>`);
+      }
     }
     item.val("");
   }

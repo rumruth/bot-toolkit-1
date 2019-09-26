@@ -48,7 +48,7 @@ $(document).ready(function() {
               $('#debug-mode').prop('checked', data.debug);
               data.debug?$("#debug-toggle").show():$("#debug-toggle").hide();
               if (data.debug) {
-                Mousetrap.bind('ctrl+a', function(e) { e.preventDefault(); panels.enableAll(); });
+                Mousetrap.bind('ctrl+shift+a', function(e) { e.preventDefault(); panels.enableAll(); });
                 Mousetrap.bind('shift+ctrl+i', function(e) { e.preventDefault(); window.toggleDevTools(); });
               }
               $('#hide-token').prop('checked', data.token);
@@ -167,7 +167,7 @@ $(document).ready(function() {
   const PresetController = require('./js/presetController.js');
   const presets = new PresetController($("[data-pres='1']"), ipcRenderer, bootbox, dict);
   const Message = require('./js/message.js');
-  const message = new Message($("[data-msg='1']"), bootbox, ipcRenderer, presets, dict);
+  const message = new Message($("[data-msg='1']"), bootbox, ipcRenderer, presets, dict, dialog, path, os);
   const VoicePanel = require('./js/voicePanel.js');
   const vPanel = new VoicePanel($("[data-vp='1']"), message, ipcRenderer, status, dict);
   const PlayerPanel = require('./js/playerPanel.js');
@@ -228,7 +228,8 @@ $(document).ready(function() {
   });
 
   //PANEL SEARCH ENGINE
-  var searchMap = require("./data/app-map.json");
+  //var searchMap = require("./data/app-map.json"); 
+  //use the preloaded localized map instead
   //please enable ctrl+a as an exception
   Mousetrap.bind('ctrl+f', function(e) { 
     e.preventDefault(); 
@@ -346,7 +347,7 @@ $(document).ready(function() {
   });
   //LANGUAGE LOADER
   const langCodes = require(path.resolve(__dirname + "/lib/" + "langCodes.js"));
-  fs.readdir(path.resolve(__dirname + "/locale/"), (err, files) => {
+  fs.readdir(path.resolve(__dirname + "/locale/dict/"), (err, files) => {
     files.forEach(file => {
       var lc = file.split('.')[0];
       $("#app-lang").append(`<option value="${lc}">${langCodes[lc].name}</option>`);
@@ -648,7 +649,6 @@ $(document).ready(function() {
 
   //TIMEOUT TO DETECT VERBOSE AND LET EVERYTHING ELSE PROCESS
   setTimeout(function(){
-
     //PLUGIN LOADER
     var plugins = [];
     fs.readdir(path.resolve(__dirname + "/plugins/"), (err, files) => {
@@ -663,7 +663,9 @@ $(document).ready(function() {
             os: os,
             vb: verbose,
             status: status,
-            storage : storage
+            storage : storage,
+            invite : invite,
+            bootbox : bootbox
           }));
         });
 
