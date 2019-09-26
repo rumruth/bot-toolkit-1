@@ -38,7 +38,7 @@ class Message {
     this.wellText = this.well.find("span").eq(0);
     this.wellClose = this.well.find("span").eq(1);
 
-    this.filesAttached = ["https://files.source.dog/dump/garbage/pics/A_A_A_C_A_T.png"];
+    this.filesAttached = [];
 
     this.kind.change(() => {
       if (this.kind.val()=="0") {

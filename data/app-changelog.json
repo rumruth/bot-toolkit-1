@@ -13,7 +13,7 @@
 			"Ambiguous select issues whenever the bot has no kick/ban rights"
 		],
 		"misc" : [
-			"Ctrl + A was changed to Ctrl + Shift + A to avoid conflict with text selection shortcut"
+			"Ctrl + A was changed to Ctrl + Shift + A to avoid conflict with the text selection shortcut"
 		]
 	}
 }
