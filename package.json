@@ -9,7 +9,7 @@
   "author": "Slydoge",
   "license": "MIT",
   "devDependencies": {
-    "electron": "~1.7.8"
+    "electron": "~13.6.6"
   },
   "dependencies": {
     "command-exists": "^1.2.6",
